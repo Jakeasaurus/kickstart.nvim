@@ -102,7 +102,7 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -156,6 +156,10 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+vim.cmd [[
+  au FileType hcl setlocal commentstring=#\ %s
+]]
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -459,8 +463,9 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
-      'williamboman/mason-lspconfig.nvim',
+      -- FIX: if mason breaks fix this
+      { 'mason-org/mason.nvim', config = true, version = 'v1.11.0' }, -- NOTE: Must be loaded before dependants
+      { 'mason-org/mason-lspconfig.nvim', version = 'v1.29.0' },
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
@@ -893,6 +898,7 @@ require('lazy').setup({
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
+      require('mini.sessions').setup()
     end,
   },
   { -- Highlight, edit, and navigate code
